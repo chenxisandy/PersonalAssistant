@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
 
     <ExpandableListView
@@ -14,17 +14,57 @@
 
     </ExpandableListView>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_add"
+<!--    <android.support.design.widget.FloatingActionButton-->
+<!--        android:id="@+id/fab_add"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:layout_marginBottom="20dp"-->
+<!--        android:src="@drawable/ic_add_white_24dp"-->
+<!--        app:backgroundTint="#2196f3"-->
+<!--        />-->
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fab_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:src="@drawable/ic_add_white_24dp"
-        app:backgroundTint="#2196f3"
-        />
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:menu_colorNormal="@color/blue"
+        >
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/search_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_search_white_24dp"
+            app:fab_colorNormal="@color/blue"
+            app:fab_label="搜索任务"
+            />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/add_list_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_playlist_add_white_24dp"
+            app:fab_colorNormal="@color/blue"
+            app:fab_label="添加清单"
+            />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/sort_list_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_format_list_bulleted_white_24dp"
+            app:fab_colorNormal="@color/blue"
+            app:fab_label="清单排序"
+            />
+
+    </com.github.clans.fab.FloatingActionMenu>
 
 
 

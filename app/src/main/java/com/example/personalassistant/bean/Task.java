@@ -1,6 +1,10 @@
-package com.example.personalassistant.data;
+package com.example.personalassistant.bean;
 
-import com.example.personalassistant.data.ShortTask;
+
+//实现三种类型任务的创建、删除、修改和按照不同规则排序（至
+//少 3 种规则）
+//排序：时间，标题，内容
+// ，实现任务的查找以及在任务清单间的转移和复制；
 
 public abstract class Task {
 

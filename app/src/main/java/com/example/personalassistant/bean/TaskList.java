@@ -1,7 +1,12 @@
-package com.example.personalassistant.data;
+package com.example.personalassistant.bean;
+
+import com.example.personalassistant.model.Repo;
 
 import java.util.ArrayList;
 import java.util.List;
+
+//实现任务清单的创建、删除、修改和按照不同规则排序（至少
+//2 种规则）：名字，类型
 
 public class TaskList {
 
@@ -9,9 +14,9 @@ public class TaskList {
 
     private String type;
 
-    private List<Task> taskList;
+    private List<Integer> taskList;
 
-    public TaskList(String name, String type, List<Task> taskList) {
+    public TaskList(String name, String type, List<Integer> taskList) {
         this.name = name;
         this.type = type;
         this.taskList = taskList;
@@ -37,14 +42,14 @@ public class TaskList {
     }
 
     public void addTask(Task task) {
-        taskList.add(task);
+        taskList.add(Repo.getInstance().getIndexFromWholeTask(task));
     }
 
     public void deleteTask(Task task) {
         taskList.remove(task);
     }
 
-    public List<Task> getTaskList() {
+    public List<Integer> getTaskList() {
         return taskList;
     }
 }

@@ -1,7 +1,9 @@
-package com.example.personalassistant;
+package com.example.personalassistant.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.personalassistant.R;
 
 public class MainActivity extends AppCompatActivity {
 

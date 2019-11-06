@@ -4,32 +4,39 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="16dp"
+    app:cardCornerRadius="14dp"
     >
+
     <RelativeLayout
-        android:id="@+id/list_item_self"
+        android:id="@+id/item_self"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="50dp">
 
         <TextView
-            android:id="@+id/list_type"
+            android:id="@+id/type_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="类型"
-            android:layout_marginStart="30dp"
-            android:textSize="20sp"
+            android:layout_marginStart="5dp"
             />
 
         <TextView
-            android:id="@+id/list_name"
+            android:id="@+id/title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:text="名称"
-            android:layout_marginStart="10dp"
-            android:textSize="20sp"
+            android:text="标题"
+            android:layout_marginStart="70dp"
+            />
+
+        <TextView
+            android:id="@+id/time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="时间"
+            android:layout_marginStart="170dp"
             />
 
         <ImageView
@@ -40,21 +47,22 @@
             android:layout_centerVertical="true"
             android:src="@drawable/ic_delete_black_36dp"/>
 
+
         <ImageView
-            android:id="@+id/add_imv"
+            android:id="@+id/copy_imv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toStartOf="@+id/delete_imv"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_playlist_add_black_36dp"/>
+            android:src="@drawable/ic_content_copy_black_36dp"/>
 
         <ImageView
-            android:id="@+id/sort_imv"
+            android:id="@+id/move_imv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toStartOf="@+id/add_imv"
+            android:layout_toStartOf="@+id/copy_imv"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_sort_black_36dp"/>
+            android:src="@drawable/ic_insert_drive_file_black_36dp"/>
 
     </RelativeLayout>
 

@@ -1,4 +1,4 @@
-package com.example.personalassistant.data;
+package com.example.personalassistant.bean;
 
 import com.example.personalassistant.Constant;
 
