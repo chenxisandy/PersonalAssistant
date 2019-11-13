@@ -1,7 +1,9 @@
 package com.example.personalassistant.model;
 
+import com.example.personalassistant.bean.Fatherable;
 import com.example.personalassistant.bean.SonTask;
 import com.example.personalassistant.bean.Task;
+import com.example.personalassistant.bean.TaskList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,15 @@ public class Repo {
     private Repo(){
         taskList = new ArrayList<>();
         sonList = new ArrayList<>();
+        manifest = new ArrayList<>();
+    }
+
+    public List<TaskList> getManifest() {
+        return manifest;
+    }
+
+    public void setManifest(List<TaskList> manifest) {
+        this.manifest = manifest;
     }
 
     private static class RepoHolder {
@@ -26,20 +37,25 @@ public class Repo {
 
     private List<SonTask> sonList;
 
-    public List<Task> getTaskListByIndexList(List<Integer> taskIndexList) {
-        List<Task> tasks = new ArrayList<>();
-        for (Integer i :
-                taskIndexList) {
-            tasks.add(taskList.get(i));
-        }
-        return tasks;
-    }
+    private List<TaskList> manifest;
 
-    public List<SonTask> getSonListByIndexList(List<Integer> sonIndexList) {
+//    public List<Task> getTaskListByIndexList(List<Integer> taskIndexList) {
+//        List<Task> tasks = new ArrayList<>();
+//        for (Integer i :
+//                taskIndexList) {
+//            tasks.add(taskList.get(i));
+//        }
+//        return tasks;
+//    }
+
+    public List<SonTask> getSonListByFather(Fatherable fatherable) {
         List<SonTask> sonTasks = new ArrayList<>();
-        for (Integer i :
-                sonIndexList) {
-            sonTasks.add(sonList.get(i));
+        for (SonTask sonTask :
+                sonList) {
+            if (sonTask.getFather().equals(fatherable)) {
+                //此刻并未重写equals因此需要考虑一下
+                sonTasks.add(sonTask);
+            }
         }
         return sonTasks;
     }
@@ -50,6 +66,14 @@ public class Repo {
 
     public int getIndexFromWholeSon(SonTask task) {
         return sonList.indexOf(task);
+    }
+
+    public void addManifest(TaskList mani) {
+        manifest.add(mani);
+    }
+
+    public void deleteManifest(TaskList mani) {
+        manifest.remove(mani);
     }
 
 }

@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="14dp"
+    app:cardBackgroundColor="#FFFFFF"
     >
 
     <RelativeLayout
@@ -17,8 +18,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/is_finished"
             android:text="类型"
+            android:textSize="12sp"
             android:layout_marginStart="5dp"
+            />
+
+        <RadioButton
+            android:id="@+id/is_finished"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
             />
 
         <TextView
@@ -27,6 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="标题"
+            android:textSize="12sp"
             android:layout_marginStart="70dp"
             />
 
@@ -36,6 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="时间"
+            android:textSize="12sp"
             android:layout_marginStart="170dp"
             />
 

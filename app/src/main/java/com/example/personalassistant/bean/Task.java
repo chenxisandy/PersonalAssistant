@@ -18,6 +18,8 @@ public abstract class Task {
 
     protected String type;
 
+    private TaskList taskList;
+
     public String getTitle() {
         return title;
     }
@@ -48,6 +50,22 @@ public abstract class Task {
 
     public void setFinish(boolean isFinish) {
         this.isFinish = isFinish;
+    }
+
+    public TaskList getTaskList() {
+        return taskList;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setTaskList(TaskList taskList) {
+        this.taskList = taskList;
     }
 
 //    public static Task createTask(String title, String content, String time, boolean isFinish, String type) {

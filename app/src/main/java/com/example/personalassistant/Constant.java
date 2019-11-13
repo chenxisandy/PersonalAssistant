@@ -12,5 +12,10 @@ public class Constant {
 //
 //    public static final String DAILY_TASK = "日常";
 
+    public static final String MOVE_TASK = "move";
+
+    public static final String COPY_TASK = "copy";
+
+    public static final String MOVE_OR_COPY = "type";
 
 }

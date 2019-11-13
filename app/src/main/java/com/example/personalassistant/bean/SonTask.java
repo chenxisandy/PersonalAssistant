@@ -1,6 +1,10 @@
 package com.example.personalassistant.bean;
 
-public class SonTask {    //泛型是为了以后的转型方便，所以不需要，copy过去之后数据也是重建一份
+import com.example.personalassistant.model.Repo;
+
+import java.util.List;
+
+public class SonTask implements Fatherable{    //泛型是为了以后的转型方便，所以不需要，copy过去之后数据也是重建一份
 
     private String title;
 
@@ -27,5 +31,10 @@ public class SonTask {    //泛型是为了以后的转型方便，所以不需�
 
     public void setFather(Fatherable father) {
         this.father = father;
+    }
+
+    @Override
+    public List<SonTask> getSonListFromRepo() {
+        return Repo.getInstance().getSonListByFather(this);
     }
 }

@@ -14,9 +14,9 @@ public class TaskList {
 
     private String type;
 
-    private List<Integer> taskList;
+    private List<Task> taskList;
 
-    public TaskList(String name, String type, List<Integer> taskList) {
+    public TaskList(String name, String type, List<Task> taskList) {
         this.name = name;
         this.type = type;
         this.taskList = taskList;
@@ -42,14 +42,18 @@ public class TaskList {
     }
 
     public void addTask(Task task) {
-        taskList.add(Repo.getInstance().getIndexFromWholeTask(task));
+        taskList.add(task);
     }
 
     public void deleteTask(Task task) {
         taskList.remove(task);
     }
 
-    public List<Integer> getTaskList() {
+    public List<Task> getTaskList() {
         return taskList;
+    }
+
+    public Task getTask(int index) {
+        return taskList.get(index);
     }
 }

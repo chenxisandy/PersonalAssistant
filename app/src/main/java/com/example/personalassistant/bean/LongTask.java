@@ -1,14 +1,14 @@
 package com.example.personalassistant.bean;
 
 import com.example.personalassistant.Constant;
+import com.example.personalassistant.model.Repo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 //暂时舍弃，因为与longTask重复
 
-public class LongTask extends Task {
-
-    private ListForSonTask taskList;
+public class LongTask extends Task implements Fatherable{
 
     public LongTask(String title, String content, String time, boolean isFinish) {
         type = Constant.CYCLE_TASK;
@@ -16,7 +16,6 @@ public class LongTask extends Task {
         this.content = content;
         this.time = time;
         this.isFinish = isFinish;
-        taskList = new ListForSonTask(new ArrayList<Integer>());
     }
 
     public LongTask() {
@@ -37,4 +36,10 @@ public class LongTask extends Task {
 //    public List<LongTask> getTaskList() {
 //        return taskList;
 //    }
+
+
+    @Override
+    public List<SonTask> getSonListFromRepo() {
+        return Repo.getInstance().getSonListByFather(this);
+    }
 }
