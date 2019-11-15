@@ -1,7 +1,7 @@
 package com.example.personalassistant;
 
 public class Constant {
-    public static final String SHORT_TASK = "短期任务";
+    public static final String SHORT_TASK = "临时任务";
 
     public static final String CYCLE_TASK = "周期任务";
 
@@ -17,5 +17,9 @@ public class Constant {
     public static final String COPY_TASK = "copy";
 
     public static final String MOVE_OR_COPY = "type";
+
+    public static final String GROUP_INDEX = "groupIndex";
+
+    public static final String CHILD_INDEX = "childIndex";
 
 }

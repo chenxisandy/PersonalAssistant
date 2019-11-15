@@ -1,9 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity.TaskActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <RadioGroup
+        android:id="@+id/group_radio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/short_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:button="@null"
+            android:text="临时任务"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/long_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="50dp"
+            android:button="@null"
+            android:text="长期任务"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/cycle_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="50dp"
+            android:button="@null"
+            android:text="周期任务"
+            android:textSize="16sp" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/title_edit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="在此输入Task标题"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/content_edit"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:hint="在此输入Task内容"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/time_edit"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:hint="请输入日期"
+        android:inputType="date"
+        android:textSize="18sp" />
+    <!--    this group will gone when you aren't cycle task-->
+
+    <RadioGroup
+        android:visibility="gone"
+        android:id="@+id/cycle_interval"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/every_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="每周"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/every_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="每月"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/every_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="每年"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/define_yourself"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="自定义天数"
+            android:textSize="16sp" />
+
+    </RadioGroup>
+
+    <!--        this edit will gone when you don't choose define_yourself-->
+
+    <EditText
+        android:visibility="gone"
+        android:id="@+id/define_edit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:hint="输入您希望的周期天数"
+        android:textSize="15dp" />
+
+    <!--        below will gone when you aren't long task-->
+    <Button
+        android:visibility="gone"
+        android:id="@+id/add_son_task"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="添加子任务"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:background="@color/blue"
+        />
+
+    <ListView
+        android:visibility="gone"
+        android:id="@+id/son_task_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

@@ -10,10 +10,13 @@ public class SonTask implements Fatherable{    //泛型是为了以后的转型�
 
     //private Fatherable father;
 
+    private String time;
+
     private Fatherable father;   //t可取Son task 或者 long task
 
-    public SonTask(String title) {
+    public SonTask(String title, String time) {
         this.title = title;
+        this.time = time;
     }
 
     public String getTitle() {
@@ -36,5 +39,13 @@ public class SonTask implements Fatherable{    //泛型是为了以后的转型�
     @Override
     public List<SonTask> getSonListFromRepo() {
         return Repo.getInstance().getSonListByFather(this);
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

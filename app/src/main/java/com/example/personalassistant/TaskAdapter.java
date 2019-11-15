@@ -1,8 +1,10 @@
 package com.example.personalassistant;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.tv.TvContentRating;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.personalassistant.activity.MainActivity;
 import com.example.personalassistant.activity.MoveActivity;
@@ -21,6 +24,8 @@ import com.example.personalassistant.bean.TaskList;
 import com.example.personalassistant.model.Repo;
 
 import java.security.acl.Group;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.crypto.spec.IvParameterSpec;
@@ -32,6 +37,8 @@ public class TaskAdapter extends BaseExpandableListAdapter {
     private List<TaskList> manifest;
 
     private Context context;
+
+    private int flag;
 
     public TaskAdapter(Context context) {
         manifest = repo.getManifest();
@@ -107,9 +114,81 @@ public class TaskAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 // TODO: 2019/11/13 sort task in this taskList
+                dialogChoice(groupPosition);
+
             }
         });
         return convertView;
+    }
+
+    private void dialogChoice(final int groupPosition) {
+        final String[] sortChoices = {"按截止日期排序", "按标题排序", "按内容排序"};
+        flag = 0;
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, 0)
+                .setTitle("选择排序方式")
+                .setSingleChoiceItems(sortChoices, 0, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        flag = which;
+                    }
+                })
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Toast.makeText(context, "您选择了" + sortChoices[flag], Toast.LENGTH_SHORT).show();
+                        sortList(groupPosition);
+                        TaskAdapter.this.notifyDataSetChanged();
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        builder.create().show();
+    }
+
+    private void sortList(int groupPosition) {
+        Comparator<Task> comparator;    //自定义排序
+        switch (flag) {
+            case 0:
+                comparator = new Comparator<Task>() {
+                    @Override
+                    public int compare(Task o1, Task o2) {
+                        if (o1.getTime().compareTo(o2.getTime()) > 0) {
+                            return -1;
+                        }
+                        else return 1;
+                    }
+                };
+                break;
+            case 1:
+                comparator = new Comparator<Task>() {
+                    @Override
+                    public int compare(Task o1, Task o2) {
+                        if (o1.getTitle().compareTo(o2.getTitle()) > 0) {
+                            return 1;
+                        }
+                        else return -1;
+                    }
+                };
+                break;
+                default:
+                    comparator = new Comparator<Task>() {
+                        @Override
+                        public int compare(Task o1, Task o2) {
+                            if (o1.getContent().compareTo(o2.getContent()) > 0) {
+                                return 1;
+                            }
+                            else return -1;
+                        }
+                    };
+                    break;
+
+        }
+        Collections.sort(manifest.get(groupPosition).getTaskList(), comparator);
     }
 
     @Override
@@ -145,7 +224,9 @@ public class TaskAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, TaskActivity.class);
-                // TODO: 2019/11/13 to put extra
+                // TODO: 2019/11/13 maybe there are some problem
+                intent.putExtra(Constant.GROUP_INDEX, groupPosition);
+                intent.putExtra(Constant.CHILD_INDEX, childPosition);
                 context.startActivity(intent);
             }
         });
@@ -169,7 +250,8 @@ public class TaskAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 manifest.get(groupPosition).getTaskList().remove(childPosition);
-                // TODO: 2019/11/13 to notify ?
+                // TODO: 2019/11/13 does notify ok?
+                TaskAdapter.this.notifyDataSetChanged();
             }
         });
         return convertView;

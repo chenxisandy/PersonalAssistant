@@ -7,6 +7,7 @@ import com.example.personalassistant.bean.TaskList;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Repo {
 
@@ -75,5 +76,7 @@ public class Repo {
     public void deleteManifest(TaskList mani) {
         manifest.remove(mani);
     }
+
+//    public Map.Entry<Integer, Integer> getTaskPosition(Task task)
 
 }

@@ -6,6 +6,8 @@ package com.example.personalassistant.bean;
 //排序：时间，标题，内容
 // ，实现任务的查找以及在任务清单间的转移和复制；
 
+import java.util.Comparator;
+
 public abstract class Task {
 
     protected String title;
@@ -76,5 +78,6 @@ public abstract class Task {
 //                return new
 //        }
 //    }
+
 
 }
