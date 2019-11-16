@@ -13,7 +13,6 @@ public class Repo {
 
     //singleton
     private Repo(){
-        taskList = new ArrayList<>();
         sonList = new ArrayList<>();
         manifest = new ArrayList<>();
     }
@@ -33,8 +32,6 @@ public class Repo {
     public static Repo getInstance() {
         return RepoHolder.INSTANCE;
     }
-
-    private List<Task> taskList;
 
     private List<SonTask> sonList;
 
@@ -61,12 +58,8 @@ public class Repo {
         return sonTasks;
     }
 
-    public int getIndexFromWholeTask(Task task) {
-        return taskList.indexOf(task);
-    }
-
-    public int getIndexFromWholeSon(SonTask task) {
-        return sonList.indexOf(task);
+    public void addSonTask(SonTask task) {
+        sonList.add(task);
     }
 
     public void addManifest(TaskList mani) {
@@ -75,6 +68,45 @@ public class Repo {
 
     public void deleteManifest(TaskList mani) {
         manifest.remove(mani);
+    }
+
+    public int getParentIndex(Task task) {
+        for (TaskList ts :
+                manifest) {
+            for (Task t :
+                    ts.getTaskList()) {
+                if (task == t) {
+                    return manifest.indexOf(ts);
+                }
+            }
+        }
+        return -1;
+    }
+
+    public TaskList getParent(Task task) {
+        for (TaskList ts :
+                manifest) {
+            for (Task t :
+                    ts.getTaskList()) {
+                if (task == t) {
+                    return ts;
+                }
+            }
+        }
+        return null;
+    }
+
+    public int getChildIndex(Task task) {
+        for (TaskList ts :
+                manifest) {
+            for (Task t :
+                    ts.getTaskList()) {
+                if (task == t) {
+                    return ts.getTaskList().indexOf(task);
+                }
+            }
+        }
+        return -1;
     }
 
 //    public Map.Entry<Integer, Integer> getTaskPosition(Task task)

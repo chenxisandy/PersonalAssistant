@@ -22,4 +22,6 @@ public class Constant {
 
     public static final String CHILD_INDEX = "childIndex";
 
+    public static final String TASK_TYPE = "taskType";
+
 }

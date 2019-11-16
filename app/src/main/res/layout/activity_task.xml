@@ -7,41 +7,61 @@
     android:orientation="vertical"
     tools:context=".activity.TaskActivity">
 
-    <RadioGroup
-        android:id="@+id/group_radio"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-        <RadioButton
-            android:id="@+id/short_task"
+        <ImageView
+            android:id="@+id/back_imv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:button="@null"
-            android:text="临时任务"
-            android:textSize="16sp" />
+            android:src="@drawable/ic_back_black_36dp"
+            />
 
-        <RadioButton
-            android:id="@+id/long_task"
+        <ImageView
+            android:id="@+id/finish_imv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="50dp"
-            android:button="@null"
-            android:text="长期任务"
-            android:textSize="16sp" />
+            android:src="@drawable/ic_check_black_36dp"
+            android:layout_alignParentEnd="true"
+            />
+    </RelativeLayout>
 
-        <RadioButton
-            android:id="@+id/cycle_task"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="50dp"
-            android:button="@null"
-            android:text="周期任务"
-            android:textSize="16sp" />
-    </RadioGroup>
+<!--    <RadioGroup-->
+<!--        android:id="@+id/group_radio"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal">-->
+
+<!--        <RadioButton-->
+<!--            android:id="@+id/short_task"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center_vertical"-->
+<!--            android:button="@null"-->
+<!--            android:text="临时任务"-->
+<!--            android:textSize="16sp" />-->
+
+<!--        <RadioButton-->
+<!--            android:id="@+id/long_task"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginStart="50dp"-->
+<!--            android:button="@null"-->
+<!--            android:text="长期任务"-->
+<!--            android:textSize="16sp" />-->
+
+<!--        <RadioButton-->
+<!--            android:id="@+id/cycle_task"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginStart="50dp"-->
+<!--            android:button="@null"-->
+<!--            android:text="周期任务"-->
+<!--            android:textSize="16sp" />-->
+<!--    </RadioGroup>-->
 
     <EditText
         android:id="@+id/title_edit"
@@ -65,6 +85,16 @@
         android:inputType="date"
         android:textSize="18sp" />
     <!--    this group will gone when you aren't cycle task-->
+
+    <EditText
+        android:visibility="gone"
+        android:inputType="numberDecimal"
+        android:id="@+id/repeat_times"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入重复次数"
+        android:textSize="18sp"
+        />
 
     <RadioGroup
         android:visibility="gone"
@@ -110,6 +140,7 @@
         android:id="@+id/define_edit"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:inputType="numberDecimal"
         android:hint="输入您希望的周期天数"
         android:textSize="15dp" />
 

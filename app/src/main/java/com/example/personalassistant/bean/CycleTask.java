@@ -4,7 +4,7 @@ import com.example.personalassistant.Constant;
 
 public class CycleTask extends Task {
 
-    private int frequency;
+    private int repeatTimes;
 
     private int interval;
 
@@ -17,14 +17,15 @@ public class CycleTask extends Task {
     }
 
     public CycleTask() {
+        type = Constant.CYCLE_TASK;
     }
 
-    public int getFrequency() {
-        return frequency;
+    public int getRepeatTimes() {
+        return repeatTimes;
     }
 
-    public void setFrequency(int frequency) {
-        this.frequency = frequency;
+    public void setRepeatTimes(int repeatTimes) {
+        this.repeatTimes = repeatTimes;
     }
 
     public int getInterval() {

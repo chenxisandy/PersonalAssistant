@@ -1,9 +1,8 @@
-package com.example.personalassistant;
+package com.example.personalassistant.adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.tv.TvContentRating;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -16,19 +15,17 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.personalassistant.activity.MainActivity;
+import com.example.personalassistant.Constant;
+import com.example.personalassistant.R;
 import com.example.personalassistant.activity.MoveActivity;
 import com.example.personalassistant.activity.TaskActivity;
 import com.example.personalassistant.bean.Task;
 import com.example.personalassistant.bean.TaskList;
 import com.example.personalassistant.model.Repo;
 
-import java.security.acl.Group;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import javax.crypto.spec.IvParameterSpec;
 
 public class TaskAdapter extends BaseExpandableListAdapter {
 
@@ -98,6 +95,7 @@ public class TaskAdapter extends BaseExpandableListAdapter {
             groupViewHolder.nameTv = convertView.findViewById(R.id.list_name);
             groupViewHolder.sortImv = convertView.findViewById(R.id.sort_imv);
             groupViewHolder.typeTv = convertView.findViewById(R.id.list_type);
+            groupViewHolder.addImv = convertView.findViewById(R.id.add_imv);
             convertView.setTag(groupViewHolder);
         } else {
             groupViewHolder = (GroupViewHolder) convertView.getTag();
@@ -118,7 +116,43 @@ public class TaskAdapter extends BaseExpandableListAdapter {
 
             }
         });
+        groupViewHolder.addImv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, TaskActivity.class);
+                dialogTaskType(groupPosition, intent);
+            }
+        });
         return convertView;
+    }
+
+    private void dialogTaskType(final int groupPosition, final Intent intent) {
+        final String[] typeChoices = {Constant.SHORT_TASK, Constant.CYCLE_TASK, Constant.LONG_TASK};
+        flag = 0;
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, 0)
+                .setTitle("选择新建任务类型")
+                .setSingleChoiceItems(typeChoices, 0, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        flag = which;
+                    }
+                })
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Toast.makeText(context, "您选择了" + typeChoices[flag], Toast.LENGTH_SHORT).show();
+                        intent.putExtra(Constant.TASK_TYPE, typeChoices[flag]);
+                        intent.putExtra(Constant.GROUP_INDEX, groupPosition);
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        builder.create().show();
     }
 
     private void dialogChoice(final int groupPosition) {
@@ -235,6 +269,8 @@ public class TaskAdapter extends BaseExpandableListAdapter {
             public void onClick(View v) {
                 Intent intent = new Intent(context, MoveActivity.class);
                 intent.putExtra(Constant.MOVE_OR_COPY, Constant.MOVE_TASK);
+                intent.putExtra(Constant.GROUP_INDEX, groupPosition);
+                intent.putExtra(Constant.CHILD_INDEX, childPosition);
                 context.startActivity(intent);
             }
         });
@@ -243,6 +279,8 @@ public class TaskAdapter extends BaseExpandableListAdapter {
             public void onClick(View v) {
                 Intent intent = new Intent(context, MoveActivity.class);
                 intent.putExtra(Constant.MOVE_OR_COPY, Constant.COPY_TASK);
+                intent.putExtra(Constant.GROUP_INDEX, groupPosition);
+                intent.putExtra(Constant.CHILD_INDEX, childPosition);
                 context.startActivity(intent);
             }
         });
@@ -270,6 +308,8 @@ public class TaskAdapter extends BaseExpandableListAdapter {
         ImageView deleteImv;
 
         ImageView sortImv;
+
+        ImageView addImv;
 
     }
 

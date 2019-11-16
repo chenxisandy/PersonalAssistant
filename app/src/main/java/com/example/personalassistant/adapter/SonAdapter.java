@@ -1,4 +1,4 @@
-package com.example.personalassistant;
+package com.example.personalassistant.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.personalassistant.R;
 import com.example.personalassistant.bean.SonTask;
 
 import java.util.List;
