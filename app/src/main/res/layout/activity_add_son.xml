@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.AddListActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/back_imv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back_black_36dp"
+            />
+
+        <ImageView
+            android:id="@+id/finish_imv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_check_black_36dp"
+            android:layout_alignParentEnd="true"
+            />
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/son_name_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入清单的名称"
+        android:textSize="20sp"
+        />
+
+    <EditText
+        android:id="@+id/son_time_edit"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入清单的日期"
+        android:inputType="datetime"
+        android:textSize="20sp"
+        />
+
+    <Button
+        android:id="@+id/add_son_task"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="添加子任务"
+        android:gravity="center"
+        android:textSize="20sp"
+        />
+
+    <ListView
+        android:id="@+id/son_task_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

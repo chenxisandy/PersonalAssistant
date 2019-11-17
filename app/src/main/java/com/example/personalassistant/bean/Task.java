@@ -6,9 +6,11 @@ package com.example.personalassistant.bean;
 //排序：时间，标题，内容
 // ，实现任务的查找以及在任务清单间的转移和复制；
 
+import org.litepal.crud.LitePalSupport;
+
 import java.util.Comparator;
 
-public abstract class Task {
+public abstract class Task extends LitePalSupport {
 
     protected String title;
 

@@ -28,7 +28,7 @@ public class AddListActivity extends AppCompatActivity implements View.OnClickLi
         nameEdit = findViewById(R.id.name_edit);
         typeEdit = findViewById(R.id.type_edit);
         backIc.setOnClickListener(this);
-        backIc.setOnClickListener(this);
+        finishIc.setOnClickListener(this);
     }
 
     @Override
@@ -38,7 +38,8 @@ public class AddListActivity extends AppCompatActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.finish_imv:
-                Repo.getInstance().addManifest(new TaskList(nameEdit.toString(), typeEdit.toString(), new ArrayList<Task>()));
+                Repo.getInstance().addManifest(new TaskList(nameEdit.getText().toString(), typeEdit.getText().toString(), new ArrayList<Task>()));
+                finish();
                 break;
         }
     }

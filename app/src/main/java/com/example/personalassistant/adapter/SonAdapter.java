@@ -17,6 +17,8 @@ import java.util.List;
 
 public class SonAdapter extends ArrayAdapter<SonTask> {
 
+    private List<SonTask> objects;
+
     public SonAdapter(@NonNull Context context, int resource, @NonNull List<SonTask> objects) {
         super(context, resource, objects);
     }
@@ -24,12 +26,16 @@ public class SonAdapter extends ArrayAdapter<SonTask> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        SonTask sonTask =getItem(position);
+        SonTask sonTask = objects.get(position);
         View view = LayoutInflater.from(getContext()).inflate(R.layout.son_item, parent, false);
         TextView timeTv = view.findViewById(R.id.son_time);
         TextView titleTv = view.findViewById(R.id.son_title);
         timeTv.setText(sonTask.getTime());
         titleTv.setText(sonTask.getTitle());
         return view;
+    }
+
+    public void setObjects(List<SonTask> objects) {
+        this.objects = objects;
     }
 }

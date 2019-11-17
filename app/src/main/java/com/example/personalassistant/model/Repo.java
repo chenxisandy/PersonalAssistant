@@ -37,7 +37,11 @@ public class Repo {
 
     private List<TaskList> manifest;
 
-//    public List<Task> getTaskListByIndexList(List<Integer> taskIndexList) {
+    public List<SonTask> getSonList() {
+        return sonList;
+    }
+
+    //    public List<Task> getTaskListByIndexList(List<Integer> taskIndexList) {
 //        List<Task> tasks = new ArrayList<>();
 //        for (Integer i :
 //                taskIndexList) {

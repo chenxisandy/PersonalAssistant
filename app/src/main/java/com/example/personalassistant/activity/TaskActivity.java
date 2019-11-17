@@ -14,6 +14,7 @@ import android.widget.RadioGroup;
 
 import com.example.personalassistant.Constant;
 import com.example.personalassistant.R;
+import com.example.personalassistant.adapter.SonAdapter;
 import com.example.personalassistant.bean.CycleTask;
 import com.example.personalassistant.bean.LongTask;
 import com.example.personalassistant.bean.ShortTask;
@@ -57,17 +58,24 @@ public class TaskActivity extends AppCompatActivity implements View.OnClickListe
 
     private List<SonTask> sonTaskList;
 
+    private boolean isAddNew = false;
+
+    private int groupPosition;
+
+    private int childPosition;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
         repo = Repo.getInstance();
         Intent intent = getIntent();
-        int groupPosition = intent.getIntExtra(Constant.GROUP_INDEX, -1);
+        groupPosition = intent.getIntExtra(Constant.GROUP_INDEX, -1);
         if (groupPosition == -1) finish();
-        int childPosition = intent.getIntExtra(Constant.CHILD_INDEX, -1);
+        childPosition = intent.getIntExtra(Constant.CHILD_INDEX, -1);
         if (childPosition == -1) {
             childPosition = Repo.getInstance().getManifest().get(groupPosition).getTaskList().size();
+            isAddNew = true;
             String type = intent.getStringExtra(Constant.TASK_TYPE);
             switch (type) {
                 case Constant.SHORT_TASK:
@@ -84,6 +92,8 @@ public class TaskActivity extends AppCompatActivity implements View.OnClickListe
                         break;
             }
             task.setTaskList(Repo.getInstance().getManifest().get(groupPosition));
+        } else {
+            task = repo.getManifest().get(groupPosition).getTaskList().get(childPosition);
         }
         initView();
     }
@@ -113,8 +123,21 @@ public class TaskActivity extends AppCompatActivity implements View.OnClickListe
             case Constant.LONG_TASK:
                 addSonTask.setVisibility(View.VISIBLE);
                 sonListView.setVisibility(View.VISIBLE);
+                repeatTimes.setVisibility(View.GONE);
+                cycleInterval.setVisibility(View.GONE);
                 sonTaskList = repo.getSonListByFather((LongTask)task);
                 if (sonTaskList == null) sonTaskList = new ArrayList<>();
+                sonListView.setAdapter(new SonAdapter(this, R.layout.son_item, sonTaskList));
+                addSonTask.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(TaskActivity.this, AddSonActivity.class);
+                        // TODO: 2019/11/17 to add or edit sonTask and its xml so putExtra index of sonTask
+                        intent.putExtra(Constant.CHILD_INDEX, childPosition);
+                        intent.putExtra(Constant.GROUP_INDEX, groupPosition);
+                        startActivity(intent);
+                    }
+                });
                 break;
             case Constant.CYCLE_TASK:
                 repeatTimes.setVisibility(View.VISIBLE);
@@ -141,6 +164,14 @@ public class TaskActivity extends AppCompatActivity implements View.OnClickListe
                 default:
                     break;
         }
+        if (isAddNew) {
+            titleEdit.setText(task.getTitle());
+            contentEdit.setText(task.getContent());
+            titleEdit.setText(task.getTime());
+            if (task.getType().equals(Constant.CYCLE_TASK)) {
+                repeatTimes.setText(((CycleTask)task).getRepeatTimes());
+            }
+        }
     }
 
     @Override
@@ -155,10 +186,10 @@ public class TaskActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void saveTask() {
-        task.setTitle(titleEdit.toString());
-        task.setContent(contentEdit.toString());
-        task.setType(contentEdit.toString());
-        task.setTime(timeEdit.toString());
+        task.setTitle(titleEdit.getText().toString());
+        task.setContent(contentEdit.getText().toString());
+        task.setType(contentEdit.getText().toString());
+        task.setTime(timeEdit.getText().toString());
         if (task.getType().equals(Constant.LONG_TASK)) {
             for (SonTask sontask :
                     sonTaskList) {
@@ -178,5 +209,8 @@ public class TaskActivity extends AppCompatActivity implements View.OnClickListe
             ((CycleTask)task).setRepeatTimes(Integer.getInteger(repeatTimes.toString()));
             // TODO: 2019/11/16  see the situation
         }
+        if (isAddNew)
+            repo.getManifest().get(groupPosition).getTaskList().add(task);
+        finish();
     }
 }

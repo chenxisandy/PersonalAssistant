@@ -1,5 +1,6 @@
 package com.example.personalassistant.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -50,14 +51,14 @@ public class ParentAdapter extends ArrayAdapter<TaskList> {
             public void onClick(View v) {
                 if (type.equals(Constant.COPY_TASK)) {
                     Repo.getInstance().getManifest().get(position).addTask(task);
-                    Toast.makeText(context, "复制成功", Toast.LENGTH_SHORT).show();
-                    ((AppCompatActivity)context).finish();
+                    Toast.makeText(getContext(), "复制成功", Toast.LENGTH_SHORT).show();
+                    ((Activity)getContext()).finish();
                 }
                 else if (type.equals(Constant.MOVE_TASK)) {
                     Repo.getInstance().getManifest().get(position).addTask(task);
                     Repo.getInstance().getParent(task).getTaskList().remove(task);
-                    Toast.makeText(context, "剪切成功", Toast.LENGTH_SHORT).show();
-                    ((AppCompatActivity)context).finish();
+                    Toast.makeText(getContext(), "剪切成功", Toast.LENGTH_SHORT).show();
+                    ((Activity)getContext()).finish();
                 }
             }
         });

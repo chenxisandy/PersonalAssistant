@@ -12,6 +12,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -86,7 +87,7 @@ public class TaskAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+    public View getGroupView(final int groupPosition, final boolean isExpanded, View convertView, ViewGroup parent) {
         GroupViewHolder groupViewHolder;
         if (convertView == null) {
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.parent_item, parent, false);
@@ -96,6 +97,7 @@ public class TaskAdapter extends BaseExpandableListAdapter {
             groupViewHolder.sortImv = convertView.findViewById(R.id.sort_imv);
             groupViewHolder.typeTv = convertView.findViewById(R.id.list_type);
             groupViewHolder.addImv = convertView.findViewById(R.id.add_imv);
+            groupViewHolder.itemSelf = convertView.findViewById(R.id.list_item_self);
             convertView.setTag(groupViewHolder);
         } else {
             groupViewHolder = (GroupViewHolder) convertView.getTag();
@@ -106,12 +108,12 @@ public class TaskAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 manifest.remove(groupPosition);
+                notifyDataSetChanged();
             }
         });
         groupViewHolder.sortImv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2019/11/13 sort task in this taskList
                 dialogChoice(groupPosition);
 
             }
@@ -123,6 +125,14 @@ public class TaskAdapter extends BaseExpandableListAdapter {
                 dialogTaskType(groupPosition, intent);
             }
         });
+//        groupViewHolder.itemSelf.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (isExpanded) {
+//
+//                }
+//            }
+//        });
         return convertView;
     }
 
@@ -144,6 +154,7 @@ public class TaskAdapter extends BaseExpandableListAdapter {
                         Toast.makeText(context, "您选择了" + typeChoices[flag], Toast.LENGTH_SHORT).show();
                         intent.putExtra(Constant.TASK_TYPE, typeChoices[flag]);
                         intent.putExtra(Constant.GROUP_INDEX, groupPosition);
+                        context.startActivity(intent);
                     }
                 })
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -193,8 +204,7 @@ public class TaskAdapter extends BaseExpandableListAdapter {
                     public int compare(Task o1, Task o2) {
                         if (o1.getTime().compareTo(o2.getTime()) > 0) {
                             return -1;
-                        }
-                        else return 1;
+                        } else return 1;
                     }
                 };
                 break;
@@ -204,22 +214,20 @@ public class TaskAdapter extends BaseExpandableListAdapter {
                     public int compare(Task o1, Task o2) {
                         if (o1.getTitle().compareTo(o2.getTitle()) > 0) {
                             return 1;
-                        }
-                        else return -1;
+                        } else return -1;
                     }
                 };
                 break;
-                default:
-                    comparator = new Comparator<Task>() {
-                        @Override
-                        public int compare(Task o1, Task o2) {
-                            if (o1.getContent().compareTo(o2.getContent()) > 0) {
-                                return 1;
-                            }
-                            else return -1;
-                        }
-                    };
-                    break;
+            default:
+                comparator = new Comparator<Task>() {
+                    @Override
+                    public int compare(Task o1, Task o2) {
+                        if (o1.getContent().compareTo(o2.getContent()) > 0) {
+                            return 1;
+                        } else return -1;
+                    }
+                };
+                break;
 
         }
         Collections.sort(manifest.get(groupPosition).getTaskList(), comparator);
@@ -228,21 +236,20 @@ public class TaskAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         final ChildViewHolder childViewHolder;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.parent_item, parent, false);
-            childViewHolder = new ChildViewHolder();
-            childViewHolder.copyImv = convertView.findViewById(R.id.copy_imv);
-            childViewHolder.deleteImv = convertView.findViewById(R.id.delete_imv);
-            childViewHolder.moveImv = convertView.findViewById(R.id.move_imv);
-            childViewHolder.itemSelf = convertView.findViewById(R.id.item_self);
-            childViewHolder.timeTv = convertView.findViewById(R.id.time_tv);
-            childViewHolder.titleTv = convertView.findViewById(R.id.title_tv);
-            childViewHolder.typeTv = convertView.findViewById(R.id.type_tv);
-            childViewHolder.radioButton = convertView.findViewById(R.id.is_finished);
-            convertView.setTag(convertView);
-        } else {
-            childViewHolder = (ChildViewHolder) convertView.getTag();
-        }
+        convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.child_item, parent, false);
+        childViewHolder = new ChildViewHolder();
+        childViewHolder.copyImv = convertView.findViewById(R.id.copy_imv);
+        childViewHolder.deleteImv = convertView.findViewById(R.id.delete_imv);
+        childViewHolder.moveImv = convertView.findViewById(R.id.move_imv);
+        childViewHolder.itemSelf = convertView.findViewById(R.id.item_self);
+        childViewHolder.timeTv = convertView.findViewById(R.id.time_tv);
+        childViewHolder.titleTv = convertView.findViewById(R.id.title_tv);
+        childViewHolder.typeTv = convertView.findViewById(R.id.type_tv);
+        childViewHolder.radioButton = convertView.findViewById(R.id.is_finished);
+        convertView.setTag(convertView);
+//        } else {
+//            childViewHolder = (ChildViewHolder) convertView.getTag();
+//        }
         final Task task = manifest.get(groupPosition).getTask(childPosition);
         childViewHolder.typeTv.setText(task.getType());
         childViewHolder.radioButton.setChecked(task.isFinish());
@@ -311,6 +318,8 @@ public class TaskAdapter extends BaseExpandableListAdapter {
 
         ImageView addImv;
 
+        RelativeLayout itemSelf;
+
     }
 
     static class ChildViewHolder {
@@ -326,7 +335,7 @@ public class TaskAdapter extends BaseExpandableListAdapter {
 
         ImageView copyImv;
 
-        CardView itemSelf;
+        RelativeLayout itemSelf;
 
         RadioButton radioButton;
     }

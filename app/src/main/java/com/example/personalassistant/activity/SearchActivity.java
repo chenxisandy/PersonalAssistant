@@ -44,16 +44,23 @@ public class SearchActivity extends AppCompatActivity {
                 searchAndShow(searchEdit.toString());
             }
         });
-        listView.setAdapter(new SearchAdapter(this, R.layout.child_item, ));
     }
 
 
     private void searchAndShow(String toString) {
         List<Task> searchList = new ArrayList<>();
         for (TaskList ts :
-                ) {
-
+                Repo.getInstance().getManifest()) {
+            for (Task task :
+                    ts.getTaskList()) {
+                if (task.getTitle().indexOf(toString) != -1
+                        || task.getContent().indexOf(toString) != -1) {
+                    searchList.add(task);
+                }
+            }
         }
+        Toast.makeText(this, "搜索完成", Toast.LENGTH_SHORT).show();
+        listView.setAdapter(new SearchAdapter(this, R.layout.child_item, searchList));
     }
 //    private void choiceDialog() {
 //        final String[] searchChoices = {"按类型排序", "按名称排序"};

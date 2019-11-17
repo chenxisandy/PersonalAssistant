@@ -20,6 +20,7 @@
             android:layout_centerVertical="true"
             android:layout_toEndOf="@id/is_finished"
             android:text="类型"
+            android:textColor="#000000"
             android:textSize="12sp"
             android:layout_marginStart="5dp"
             />
@@ -38,6 +39,7 @@
             android:layout_centerVertical="true"
             android:text="标题"
             android:textSize="12sp"
+            android:textColor="#000000"
             android:layout_marginStart="70dp"
             />
 
@@ -47,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="时间"
+            android:textColor="#000000"
             android:textSize="12sp"
             android:layout_marginStart="170dp"
             />

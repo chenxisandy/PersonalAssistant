@@ -11,7 +11,7 @@ import java.util.List;
 public class LongTask extends Task implements Fatherable{
 
     public LongTask(String title, String content, String time, boolean isFinish) {
-        type = Constant.CYCLE_TASK;
+        type = Constant.LONG_TASK;
         this.title = title;
         this.content = content;
         this.time = time;
@@ -19,7 +19,7 @@ public class LongTask extends Task implements Fatherable{
     }
 
     public LongTask() {
-        type = Constant.CYCLE_TASK;
+        type = Constant.LONG_TASK;
     }
 
 //    public void addTask(LongTask task) {

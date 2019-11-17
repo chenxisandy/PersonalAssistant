@@ -2,13 +2,15 @@ package com.example.personalassistant.bean;
 
 import com.example.personalassistant.model.Repo;
 
+import org.litepal.crud.LitePalSupport;
+
 import java.util.ArrayList;
 import java.util.List;
 
 //实现任务清单的创建、删除、修改和按照不同规则排序（至少
 //2 种规则）：名字，类型
 
-public class TaskList {
+public class TaskList extends LitePalSupport {
 
     private String name;
 

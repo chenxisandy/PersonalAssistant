@@ -18,6 +18,8 @@ import com.example.personalassistant.model.Repo;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
+import org.litepal.LitePal;
+
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -27,19 +29,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private int flag;
 
+    private TaskAdapter taskAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
+        //LitePal.initialize(this);
     }
 
     private void initView() {
         expandableListView = findViewById(R.id.expandable_list);
-        FloatingActionButton SearchFab = findViewById(R.id.search_fab);
-        FloatingActionButton AddListFab = findViewById(R.id.add_list_fab);
-        FloatingActionButton SortFab = findViewById(R.id.sort_list_fab);
-        expandableListView.setAdapter(new TaskAdapter(this));
+        FloatingActionButton searchFab = findViewById(R.id.search_fab);
+        FloatingActionButton addListFab = findViewById(R.id.add_list_fab);
+        FloatingActionButton sortFab = findViewById(R.id.sort_list_fab);
+        searchFab.setOnClickListener(this);
+        addListFab.setOnClickListener(this);
+        sortFab.setOnClickListener(this);
+        taskAdapter = new TaskAdapter(this);
+        expandableListView.setAdapter(taskAdapter);
+        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                return false;
+            }
+        });
+        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                for (int i = 0, count = taskAdapter.getGroupCount(); i < count; i++) {
+                    if (groupPosition != i) {// 关闭其他分组
+                        expandableListView.collapseGroup(i);
+                    }
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        taskAdapter.setManifest(Repo.getInstance().getManifest());
+        taskAdapter.notifyDataSetChanged();
+//        for (int i = 0, count = taskAdapter.getGroupCount(); i < count; i++) {
+//            expandableListView.expandGroup(i);
+//        }
     }
 
     @Override
