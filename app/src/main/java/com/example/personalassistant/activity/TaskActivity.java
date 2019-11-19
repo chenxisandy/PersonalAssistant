@@ -202,8 +202,9 @@ public class TaskActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_imv:
+                if (isAddNew)
                 repo.getManifest().get(groupPosition).getTaskList().remove(task);
-                        if (task.getType().equals(Constant.LONG_TASK)) {
+                if (task.getType().equals(Constant.LONG_TASK)) {
             for (SonTask sontask :
                     sonTaskList) {
                 sontask.setFather((LongTask)task);
