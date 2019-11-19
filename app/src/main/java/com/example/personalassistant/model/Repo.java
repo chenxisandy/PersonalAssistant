@@ -1,9 +1,14 @@
 package com.example.personalassistant.model;
 
+import com.example.personalassistant.bean.CycleTask;
 import com.example.personalassistant.bean.Fatherable;
+import com.example.personalassistant.bean.LongTask;
+import com.example.personalassistant.bean.ShortTask;
 import com.example.personalassistant.bean.SonTask;
 import com.example.personalassistant.bean.Task;
 import com.example.personalassistant.bean.TaskList;
+
+import org.litepal.LitePal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +20,12 @@ public class Repo {
     private Repo(){
         sonList = new ArrayList<>();
         manifest = new ArrayList<>();
+    }
+
+    public void initData() {
+        List<SonTask> curSonList = LitePal.findAll(SonTask.class, true);
+        sonList.addAll(curSonList);
+        manifest.addAll(LitePal.findAll(TaskList.class, true));
     }
 
     public List<TaskList> getManifest() {
@@ -114,5 +125,25 @@ public class Repo {
     }
 
 //    public Map.Entry<Integer, Integer> getTaskPosition(Task task)
-
+    public void saveData() {
+        for (TaskList tl :
+                manifest) {
+            for (Task task :
+                    tl.getTaskList()) {
+                task.setTaskList(tl);
+                if (task instanceof ShortTask) {
+                    ((ShortTask)task).save();
+                } else if (task instanceof LongTask) {
+                    for (SonTask son :
+                            ((LongTask) task).getSonListFromRepo()) {
+                        son.save();
+                    }
+                    ((LongTask)task).save();
+                } else if (task instanceof CycleTask) {
+                    ((CycleTask)task).save();
+                }
+            }
+            tl.save();
+        }
+    }
 }

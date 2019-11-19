@@ -64,6 +64,8 @@ public class TaskActivity extends AppCompatActivity implements View.OnClickListe
 
     private int childPosition;
 
+    private SonAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +94,7 @@ public class TaskActivity extends AppCompatActivity implements View.OnClickListe
                         break;
             }
             task.setTaskList(Repo.getInstance().getManifest().get(groupPosition));
+            repo.getManifest().get(groupPosition).getTaskList().add(task);
         } else {
             task = repo.getManifest().get(groupPosition).getTaskList().get(childPosition);
         }
@@ -127,7 +130,8 @@ public class TaskActivity extends AppCompatActivity implements View.OnClickListe
                 cycleInterval.setVisibility(View.GONE);
                 sonTaskList = repo.getSonListByFather((LongTask)task);
                 if (sonTaskList == null) sonTaskList = new ArrayList<>();
-                sonListView.setAdapter(new SonAdapter(this, R.layout.son_item, sonTaskList));
+                adapter = new SonAdapter(this, R.layout.son_item, sonTaskList);
+                sonListView.setAdapter(adapter);
                 addSonTask.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -135,6 +139,7 @@ public class TaskActivity extends AppCompatActivity implements View.OnClickListe
                         // TODO: 2019/11/17 to add or edit sonTask and its xml so putExtra index of sonTask
                         intent.putExtra(Constant.CHILD_INDEX, childPosition);
                         intent.putExtra(Constant.GROUP_INDEX, groupPosition);
+                        intent.putExtra(Constant.SON_INDEX, ((LongTask)task).getSonListFromRepo().size());
                         startActivity(intent);
                     }
                 });
@@ -164,12 +169,28 @@ public class TaskActivity extends AppCompatActivity implements View.OnClickListe
                 default:
                     break;
         }
-        if (isAddNew) {
+        if (!isAddNew) {
             titleEdit.setText(task.getTitle());
             contentEdit.setText(task.getContent());
-            titleEdit.setText(task.getTime());
+            timeEdit.setText(task.getTime());
             if (task.getType().equals(Constant.CYCLE_TASK)) {
                 repeatTimes.setText(((CycleTask)task).getRepeatTimes());
+                defineEdit.setVisibility(View.GONE);
+                switch (((CycleTask)task).getInterval()) {
+                    case 7:
+                        everyWeek.setChecked(true);
+                        break;
+                    case 30:
+                        everyMonth.setChecked(true);
+                        break;
+                    case 365:
+                        everyYear.setChecked(true);
+                        break;
+                        default:
+                            defineEdit.setVisibility(View.VISIBLE);
+                            defineEdit.setText(Integer.toString(((CycleTask) task).getInterval()));
+                            break;
+                }
             }
         }
     }
@@ -178,6 +199,14 @@ public class TaskActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_imv:
+                repo.getManifest().get(groupPosition).getTaskList().remove(task);
+                        if (task.getType().equals(Constant.LONG_TASK)) {
+            for (SonTask sontask :
+                    sonTaskList) {
+                sontask.setFather((LongTask)task);
+                repo.getSonList().remove(sontask);
+            }
+        }
                 finish();
                 break;
             case R.id.finish_imv:
@@ -190,13 +219,14 @@ public class TaskActivity extends AppCompatActivity implements View.OnClickListe
         task.setContent(contentEdit.getText().toString());
         task.setType(contentEdit.getText().toString());
         task.setTime(timeEdit.getText().toString());
-        if (task.getType().equals(Constant.LONG_TASK)) {
-            for (SonTask sontask :
-                    sonTaskList) {
-                sontask.setFather((LongTask)task);
-                repo.addSonTask(sontask);
-            }
-        } else if (task.getType().equals(Constant.CYCLE_TASK)) {
+//        if (task.getType().equals(Constant.LONG_TASK)) {
+//            for (SonTask sontask :
+//                    sonTaskList) {
+//                sontask.setFather((LongTask)task);
+//                repo.addSonTask(sontask);
+//            }
+//        } else
+            if (task.getType().equals(Constant.CYCLE_TASK)) {
             if (everyWeek.isChecked()) {
                 ((CycleTask)task).setInterval(7);
             } else if (everyMonth.isChecked()) {
@@ -210,7 +240,17 @@ public class TaskActivity extends AppCompatActivity implements View.OnClickListe
             // TODO: 2019/11/16  see the situation
         }
         if (isAddNew)
-            repo.getManifest().get(groupPosition).getTaskList().add(task);
+            //repo.getManifest().get(groupPosition).getTaskList().add(task);
         finish();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (task.getType().equals(Constant.LONG_TASK)) {
+            adapter.setObjects(repo.getSonListByFather((LongTask)task));
+            adapter.notifyDataSetChanged();
+        }
     }
 }

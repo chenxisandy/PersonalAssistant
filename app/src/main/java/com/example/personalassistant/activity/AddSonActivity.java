@@ -40,6 +40,10 @@ public class AddSonActivity extends AppCompatActivity implements View.OnClickLis
 
     private ListView listView;
 
+    private SonTask sonTask;
+
+    private Repo repo = Repo.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,22 +58,25 @@ public class AddSonActivity extends AppCompatActivity implements View.OnClickLis
         addButton.setOnClickListener(this);
         Intent intent = getIntent();
         sonIndex = intent.getIntExtra(Constant.SON_INDEX, -1);
-        listView = findViewById(R.id.son_task_list);
-        if (sonIndex == -1) {
-            isSonTask = false;
-            adapter = new SonAdapter(this, R.layout.son_item, Repo.getInstance().
-                    getSonListByFather((LongTask) Repo.getInstance().getManifest().get(groupPosition).getTaskList().get(childPosition)));
-        } else {
-            adapter = new SonAdapter(this, R.layout.son_item,
-                    Repo.getInstance().getSonListByFather(Repo.getInstance().getSonList().get(sonIndex)));
-        }
-        listView.setAdapter(adapter);
         groupPosition = intent.getIntExtra(Constant.GROUP_INDEX, -1);
         childPosition = intent.getIntExtra(Constant.CHILD_INDEX, -1);
+        listView = findViewById(R.id.son_task_list);
+        sonTask = new SonTask();
+        if (groupPosition != -1 && childPosition != -1) {
+            isSonTask = false;
+            sonTask.setFather((LongTask)Repo.getInstance().getManifest().get(groupPosition).getTaskList().get(childPosition));
+        } else {
+            sonTask.setFather(Repo.getInstance().getSonList().get(groupPosition));
+        }
+        repo.addSonTask(sonTask);
+        adapter = new SonAdapter(this, R.layout.son_item, new ArrayList<SonTask>());
+        listView.setAdapter(adapter);
     }
 
     private void refresh() {
-        if (sonIndex == -1) {
+        sonTask.setTime(timeEdit.getText().toString());
+        sonTask.setTitle(nameEdit.getText().toString());
+        if (isSonTask) {
             adapter.setObjects(Repo.getInstance().getSonListByFather((LongTask) Repo.getInstance().getManifest().get(groupPosition).getTaskList().get(childPosition))
             );
         } else {
@@ -88,20 +95,18 @@ public class AddSonActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back_imv:
+                repo.getSonList().remove(sonTask);
                 finish();
                 break;
             case R.id.finish_imv:
-                SonTask sonTask = new SonTask(nameEdit.getText().toString(), timeEdit.getText().toString());
-                if (isSonTask)
-                    sonTask.setFather(Repo.getInstance().getSonList().get(sonIndex));
-                else
-                    sonTask.setFather((LongTask) Repo.getInstance().getManifest().get(groupPosition).getTaskList().get(childPosition));
-                Repo.getInstance().addSonTask(sonTask);
+                sonTask.setTime(timeEdit.getText().toString());
+                sonTask.setTitle(nameEdit.getText().toString());
                 finish();
                 break;
             case R.id.add_son_task:
                 Intent intentSon = new Intent(this, AddSonActivity.class);
                 intentSon.putExtra(Constant.SON_INDEX, Repo.getInstance().getSonList().size());
+                intentSon.putExtra(Constant.GROUP_INDEX, Repo.getInstance().getSonList().indexOf(sonTask));
                 startActivity(intentSon);
                 break;
         }

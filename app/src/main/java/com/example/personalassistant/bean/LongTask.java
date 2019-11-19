@@ -1,5 +1,7 @@
 package com.example.personalassistant.bean;
 
+import android.support.annotation.Nullable;
+
 import com.example.personalassistant.Constant;
 import com.example.personalassistant.model.Repo;
 
@@ -41,5 +43,17 @@ public class LongTask extends Task implements Fatherable{
     @Override
     public List<SonTask> getSonListFromRepo() {
         return Repo.getInstance().getSonListByFather(this);
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (!(obj instanceof LongTask)) return false;
+        else if (((LongTask)obj).getContent().equals(this.content)
+                && ((LongTask)obj).getTitle().equals(this.title)
+                && ((LongTask)obj).getContent().equals(this.content)
+                && ((LongTask)obj).getTime().equals(this.time)) {
+            return true;
+        }
+        return false;
     }
 }

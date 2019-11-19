@@ -1,5 +1,7 @@
 package com.example.personalassistant.bean;
 
+import android.support.annotation.Nullable;
+
 import com.example.personalassistant.model.Repo;
 
 import org.litepal.crud.LitePalSupport;
@@ -20,6 +22,8 @@ public class SonTask extends LitePalSupport implements Fatherable{    //泛型�
         this.title = title;
         this.time = time;
     }
+
+    public SonTask() {};
 
     public String getTitle() {
         return title;
@@ -49,5 +53,15 @@ public class SonTask extends LitePalSupport implements Fatherable{    //泛型�
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (!(obj instanceof SonTask)) return false;
+        else if (((SonTask)obj).getTitle().equals(this.title)
+                && ((SonTask)obj).getTime().equals(this.time)) {
+            return true;
+        }
+        return false;
     }
 }

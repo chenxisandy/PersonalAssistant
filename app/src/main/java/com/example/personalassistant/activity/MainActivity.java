@@ -152,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
         Collections.sort(Repo.getInstance().getManifest(), comparator);
+        taskAdapter.notifyDataSetChanged();
     }
 
     private void setFlag(int which) {

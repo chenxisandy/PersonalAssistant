@@ -37,11 +37,11 @@ public class SearchActivity extends AppCompatActivity {
         searchIc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (searchEdit.toString() == null || searchEdit.toString().isEmpty()) {
+                if (searchEdit.getText().toString() == null || searchEdit.getText().toString().isEmpty()) {
                     Toast.makeText(SearchActivity.this, "请输入搜索内容", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                searchAndShow(searchEdit.toString());
+                searchAndShow(searchEdit.getText().toString());
             }
         });
     }

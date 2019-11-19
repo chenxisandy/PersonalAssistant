@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.personalassistant.Constant;
@@ -52,10 +53,11 @@ public class SearchAdapter extends ArrayAdapter<Task> {
         });
         timeTv.setText(task.getTime());
         titleTv.setText(task.getTitle());
-        ImageView copyImv = convertView.findViewById(R.id.copy_imv);
-        ImageView deleteImv = convertView.findViewById(R.id.delete_imv);
-        ImageView moveImv = convertView.findViewById(R.id.move_imv);
-        CardView itemSelf = convertView.findViewById(R.id.item_self);
+        typeTv.setText(task.getType());
+        ImageView copyImv = view.findViewById(R.id.copy_imv);
+        ImageView deleteImv = view.findViewById(R.id.delete_imv);
+        ImageView moveImv = view.findViewById(R.id.move_imv);
+        RelativeLayout itemSelf = view.findViewById(R.id.item_self);
         itemSelf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

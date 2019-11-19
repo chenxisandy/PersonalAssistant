@@ -1,0 +1,14 @@
+<?xml version="0.1" encoding="utf-8"?>
+<litepal>
+    <dbname value="manifest" />
+    <version value="1" />
+    <list>
+        <mapping class="com.example.personalassistant.bean.CycleTask"></mapping>
+        <mapping class="com.example.personalassistant.bean.LongTask"></mapping>
+        <mapping class="com.example.personalassistant.bean.TaskList"></mapping>
+        <mapping class="com.example.personalassistant.bean.ShortTask"></mapping>
+        <mapping class="com.example.personalassistant.bean.Task"></mapping>
+        <mapping class="com.example.personalassistant.bean.SonTask"></mapping>
+    </list>
+<!--    <storage value="interval" />-->
+</litepal>
