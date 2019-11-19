@@ -55,13 +55,13 @@ public class SonTask extends LitePalSupport implements Fatherable{    //泛型�
         this.time = time;
     }
 
-    @Override
-    public boolean equals(@Nullable Object obj) {
-        if (!(obj instanceof SonTask)) return false;
-        else if (((SonTask)obj).getTitle().equals(this.title)
-                && ((SonTask)obj).getTime().equals(this.time)) {
-            return true;
-        }
-        return false;
-    }
+//    @Override
+//    public boolean equals(@Nullable Object obj) {
+//        if (!(obj instanceof SonTask)) return false;
+//        else if (((SonTask)obj).getTitle().equals(this.title)
+//                && ((SonTask)obj).getTime().equals(this.time)) {
+//            return true;
+//        }
+//        return false;
+//    }
 }

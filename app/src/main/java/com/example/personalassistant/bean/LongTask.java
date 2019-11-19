@@ -45,15 +45,15 @@ public class LongTask extends Task implements Fatherable{
         return Repo.getInstance().getSonListByFather(this);
     }
 
-    @Override
-    public boolean equals(@Nullable Object obj) {
-        if (!(obj instanceof LongTask)) return false;
-        else if (((LongTask)obj).getContent().equals(this.content)
-                && ((LongTask)obj).getTitle().equals(this.title)
-                && ((LongTask)obj).getContent().equals(this.content)
-                && ((LongTask)obj).getTime().equals(this.time)) {
-            return true;
-        }
-        return false;
-    }
+//    @Override
+//    public boolean equals(@Nullable Object obj) {
+//        if (!(obj instanceof LongTask)) return false;
+//        else if (((LongTask)obj).getContent().equals(this.content)
+//                && ((LongTask)obj).getTitle().equals(this.title)
+//                && ((LongTask)obj).getContent().equals(this.content)
+//                && ((LongTask)obj).getTime().equals(this.time)) {
+//            return true;
+//        }
+//        return false;
+//    }
 }

@@ -140,6 +140,9 @@ public class TaskActivity extends AppCompatActivity implements View.OnClickListe
                         intent.putExtra(Constant.CHILD_INDEX, childPosition);
                         intent.putExtra(Constant.GROUP_INDEX, groupPosition);
                         intent.putExtra(Constant.SON_INDEX, ((LongTask)task).getSonListFromRepo().size());
+                        task.setTitle(titleEdit.getText().toString());
+                        task.setContent(contentEdit.getText().toString());
+                        task.setTime(timeEdit.getText().toString());
                         startActivity(intent);
                     }
                 });
@@ -217,7 +220,6 @@ public class TaskActivity extends AppCompatActivity implements View.OnClickListe
     private void saveTask() {
         task.setTitle(titleEdit.getText().toString());
         task.setContent(contentEdit.getText().toString());
-        task.setType(contentEdit.getText().toString());
         task.setTime(timeEdit.getText().toString());
 //        if (task.getType().equals(Constant.LONG_TASK)) {
 //            for (SonTask sontask :

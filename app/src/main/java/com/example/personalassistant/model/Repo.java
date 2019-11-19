@@ -66,7 +66,6 @@ public class Repo {
         for (SonTask sonTask :
                 sonList) {
             if (sonTask.getFather().equals(fatherable)) {
-                //此刻并未重写equals因此需要考虑一下
                 sonTasks.add(sonTask);
             }
         }

@@ -41,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="请输入清单的日期"
-        android:inputType="datetime"
+        android:inputType="date"
         android:textSize="20sp"
         />
 
